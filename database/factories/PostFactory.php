@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
@@ -14,10 +15,12 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $maxUserId = User::max('id');
+
         return [
-            "title" => fake() ->title(),
+            "title" => fake()->title(),
             "content" => fake()->paragraph(),
-            'user_id' => fake()->numberBetween(1, 1000000), 
+            'user_id' => fake()->numberBetween(1, $maxUserId),
             "published_at" => fake()->date(),
             "image" => fake()->imageUrl()
         ];
